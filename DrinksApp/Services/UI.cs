@@ -1,6 +1,6 @@
 ﻿using Spectre.Console;
-
-namespace DrinksApp.Services;
+//namespace DrinksApp.Services;
+using DrinksAPI;
 
 internal class UI
 {
@@ -11,16 +11,6 @@ internal class UI
         AnsiConsole.MarkupLine("[bold orange3]To Continue, please press Enter... [/]");
         System.Console.ReadKey();
     }
-
-    //public static void GetMainMenuChoice()
-    //{
-    //    System.Console.Clear();
-    //    var userInput = AnsiConsole.Prompt(
-    //        new SelectionPrompt<MainMenuOption>()
-    //        .Title("Please select a menu Option:")
-    //        .AddChoices(Enum.GetValues<MainMenuOption>()));
-    //    return userInput;
-    //}
 
     public static async Task<string> GetMainMenuChoice()
     {

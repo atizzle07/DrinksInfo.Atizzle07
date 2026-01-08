@@ -5,6 +5,8 @@ VisualStudioVersion = 18.1.11312.151 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrinksApp", "DrinksApp\DrinksApp.csproj", "{9951DEE4-8A01-100E-DD79-6001DDF4C57F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrinksAPI", "..\..\..\ClassLibraries\DrinkAPI\DrinksAPI.csproj", "{68373660-EE3D-4243-BAC4-7119AFBA0DC3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{9951DEE4-8A01-100E-DD79-6001DDF4C57F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9951DEE4-8A01-100E-DD79-6001DDF4C57F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9951DEE4-8A01-100E-DD79-6001DDF4C57F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68373660-EE3D-4243-BAC4-7119AFBA0DC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68373660-EE3D-4243-BAC4-7119AFBA0DC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68373660-EE3D-4243-BAC4-7119AFBA0DC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68373660-EE3D-4243-BAC4-7119AFBA0DC3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
