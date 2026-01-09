@@ -3,6 +3,7 @@ using Spectre.Console;
 
 internal class UI
 {
+    List<string> menuChoices = new();
     public static void WelcomeMessage()
     {
         Rule rule = new();
@@ -21,14 +22,18 @@ internal class UI
         Console.ReadKey();
     }
 
-    public static async Task<string> GetMainMenuChoice()
+    public async void LoadCategories()
     {
-        List<string> choices = await ApiHelper.GetAllCategories();
+         menuChoices = await ApiHelper.GetAllCategories();
+    }
+
+    public async Task<string> GetMainMenuChoice()
+    {
         Console.Clear();
         var userInput = AnsiConsole.Prompt(
             new SelectionPrompt<string>()
             .Title("Please select a menu Option:")
-            .AddChoices(choices));
+            .AddChoices(menuChoices));
         return userInput;
     }
 }
