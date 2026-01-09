@@ -1,5 +1,5 @@
-﻿DrinksApp.Services.ApiHelper.InitializeClient();
-DrinksApp.Services.UI.WelcomeMessage();
+﻿using DrinksApp.Services;
 
-string userChoice = await DrinksApp.Services.UI.GetMainMenuChoice();
-
+ApiHelper.InitializeClient();
+UI.WelcomeMessage();
+//string userChoice = await UI.GetMainMenuChoice();
