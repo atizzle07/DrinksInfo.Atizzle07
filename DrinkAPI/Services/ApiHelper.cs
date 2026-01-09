@@ -38,7 +38,5 @@ public static class ApiHelper
         }
     }
 
-    public static async Task<>
-}
-
+    // public static async Task<>
 }
