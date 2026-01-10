@@ -1,6 +1,5 @@
 ﻿using DrinksApp.Models;
 using Newtonsoft.Json;
-using System.Runtime.CompilerServices;
 
 namespace DrinksApp.Services;
 

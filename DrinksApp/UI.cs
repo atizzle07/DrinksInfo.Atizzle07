@@ -1,9 +1,8 @@
 ﻿using DrinksApp.Services;
 using Spectre.Console;
 
-internal class UI
+public class UI
 {
-    List<string> menuChoices = new();
     public static void WelcomeMessage()
     {
         Rule rule = new();
@@ -22,13 +21,25 @@ internal class UI
         Console.ReadKey();
     }
 
-    public async void LoadCategories()
+    public static async Task<List<string>> LoadCategories()
     {
-         menuChoices = await ApiHelper.GetAllCategories();
+        var _menuChoices = new List<string>();
+        if (_menuChoices == null)
+        {
+            _menuChoices!.AddRange(await ApiHelper.GetAllCategories());
+            _menuChoices.Add("Exit Application"); // Append an exit clause to the list.
+            return _menuChoices;
+        }
+        else
+        {
+            return _menuChoices;
+        }
     }
 
-    public async Task<string> GetMainMenuChoice()
+    public static async Task<string> GetMainMenuChoice()
     {
+        List<string> menuChoices = await LoadCategories();
+
         Console.Clear();
         var userInput = AnsiConsole.Prompt(
             new SelectionPrompt<string>()
