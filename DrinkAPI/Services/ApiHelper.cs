@@ -1,4 +1,5 @@
-﻿using DrinksApp.Models;
+﻿using DrinksAPI.Models;
+using DrinksApp.Models;
 using Newtonsoft.Json;
 
 namespace DrinksApp.Services;
@@ -37,5 +38,48 @@ public static class ApiHelper
         }
     }
 
-    // public static async Task<>
+    public static async Task<List<string>> GetDrinksList(string category)
+    {
+        using HttpResponseMessage response = await ApiClient!.GetAsync($"filter.php?c={category}");
+
+        if (response.IsSuccessStatusCode)
+        {
+            string jsonResponse = await response.Content.ReadAsStringAsync();
+            Console.ReadKey();
+            DrinkResponse dr = JsonConvert.DeserializeObject<DrinkResponse>(jsonResponse)!;
+
+            List<string> Items = new();
+            foreach (DrinkItem item in dr.Drinks)
+            {
+                Items.Add(item.Name);
+            }
+            return Items;
+        }
+        else
+        {
+            throw new Exception(response.ReasonPhrase);
+        }
+    }
+    public static async Task GetRecipe(int recipeId)
+    {
+        using HttpResponseMessage response = await ApiClient!.GetAsync($"lookup.php?i={recipeId}");
+
+        if (response.IsSuccessStatusCode)
+        {
+            string jsonResponse = await response.Content.ReadAsStringAsync();
+        //    DrinkResponse dr = JsonConvert.DeserializeObject<DrinkResponse>(jsonResponse)!;
+
+        //    List<string> Items = new();
+        //    foreach (DrinkItem item in dr.Drinks)
+        //    {
+        //        Items.Add(item.Name);
+        //    }
+        //    return Items;
+        }
+        else
+        {
+            throw new Exception(response.ReasonPhrase);
+        }
+    }
+
 }

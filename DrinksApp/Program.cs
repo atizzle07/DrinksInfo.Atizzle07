@@ -1,14 +1,23 @@
 ﻿using DrinksApp.Services;
 
-string userChoice;
-bool AppExit = false;
+string categoryChoice;
+string drinkChoice;
+string recipeChoice;
 ApiHelper.InitializeClient();
 UI.WelcomeMessage();
 
 do
 {
-    userChoice = await UI.GetMainMenuChoice();
+    categoryChoice = await UI.GetCategoryChoice();
+	do
+	{
+		drinkChoice = await UI.GetDrinkChoice(categoryChoice);
+        do
+        {
+            recipeChoice = await UI.GetRecipeId(recipeId);
+        } while (drinkChoice != "Back");
+    } while (drinkChoice != "Back");
 
-} while (userChoice != "Exit Application");
+} while (categoryChoice != "Exit");
 
 

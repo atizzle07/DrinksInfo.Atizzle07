@@ -2,7 +2,7 @@
 
 namespace DrinksAPI.Models;
 
-public class DrinkRecipe
+public class RecipeResponse
 {
     [JsonProperty("idDrink")]
     public int Id { get; set; }
