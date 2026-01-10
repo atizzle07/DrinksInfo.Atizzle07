@@ -45,6 +45,4 @@ public class RecipeDTO
     [JsonProperty("strMeasure13")] public string? Measure13 { get; set; }
     [JsonProperty("strMeasure14")] public string? Measure14 { get; set; }
     [JsonProperty("strMeasure15")] public string? Measure15 { get; set; }
-
-
 }
