@@ -4,7 +4,11 @@ namespace DrinksAPI.Services;
 
 public class DrinkReciperMapper
 {
-    public static List<Ingredient>? ConvertRecipeData(IngredientListDTO dto)
+
+
+
+
+    public static List<Ingredient>? ConvertRecipeData(RecipeDTO dto)
     {
         if (dto == null)
         {

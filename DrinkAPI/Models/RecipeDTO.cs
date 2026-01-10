@@ -1,12 +1,19 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DrinksAPI.Models;
 
-public class IngredientListDTO
+public class RecipeDTO
 {
+    [JsonProperty("idDrink")]
+    public int Id { get; set; }
+    [JsonProperty("strDrink")]
+    public string? DrinkName { get; set; }
+    [JsonProperty("strCategory")]
+    public string? Category { get; set; }
+    [JsonProperty("strGlass")]
+    public string? Glass { get; set; }
+    [JsonProperty("strInstructions")]
+    public string? InstructionsText { get; set; }
     [JsonProperty("strIngredient1")] public string? Ingredient1 { get; set; }
     [JsonProperty("strIngredient2")] public string? Ingredient2 { get; set; }
     [JsonProperty("strIngredient3")] public string? Ingredient3 { get; set; }
