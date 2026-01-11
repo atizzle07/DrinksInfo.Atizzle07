@@ -8,13 +8,13 @@ UI.WelcomeMessage();
 
 do
 {
-    categoryChoice = await UI.GetCategoryChoice();
-	do
+    categoryChoice = await UI.GetCategoryChoice(); // step 1 - select and display drink category
+    do
 	{
-		drinkChoice = await UI.GetDrinkChoice(categoryChoice);
+		drinkChoice = await UI.GetDrinkChoice(categoryChoice); // step 2 - select and display and select drink
         do
         {
-            recipeChoice = await UI.GetRecipeId(recipeId);
+            recipeChoice = await UI.GetRecipeChoice(drinkChoice); // step 3 - select and display and select recipe
         } while (drinkChoice != "Back");
     } while (drinkChoice != "Back");
 

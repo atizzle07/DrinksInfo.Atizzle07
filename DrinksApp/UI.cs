@@ -3,6 +3,7 @@ using Spectre.Console;
 
 public class UI
 {
+    #region Menu Setups
     public static void WelcomeMessage()
     {
         Rule rule = new();
@@ -21,32 +22,6 @@ public class UI
         Console.ReadKey();
     }
 
-    #region LoadData
-    public static async Task<List<string>> LoadCategories()
-    {
-        var _categoryMenu = new List<string>();
-        if (_categoryMenu.Count == 0)
-        {
-            _categoryMenu!.AddRange(await ApiHelper.GetAllCategories());
-            _categoryMenu.Add("Exit"); // Append an exit option to the list.
-            return _categoryMenu;
-        }
-        else
-        {
-            return _categoryMenu;
-        }
-    }
-
-    public static async Task<List<string>> LoadDrinks(string category)
-    {
-        var _drinksMenu = new List<string>();
-        _drinksMenu.AddRange(await ApiHelper.GetDrinksList(category));
-        _drinksMenu.Insert(0,"Back");
-        return _drinksMenu;
-    }
-    #endregion
-
-    #region Menu Setups
     public static async Task<string> GetCategoryChoice()
     {
         List<string> categoryMenu = await LoadCategories();
@@ -75,10 +50,41 @@ public class UI
         return userInput;
     }
 
-    internal static async Task<string> GetRecipeId(int recipeId)
+    internal static async Task<string> GetRecipeChoice(string drinkChoice)
     {
         throw new NotImplementedException();
     }
+
+    
     #endregion
+
+    #region LoadData
+    public static async Task<List<string>> LoadCategories()
+    {
+        var _categoryMenu = new List<string>();
+        if (_categoryMenu.Count == 0)
+        {
+            _categoryMenu!.AddRange(await ApiHelper.GetAllCategories());
+            _categoryMenu.Add("Exit"); // Append an exit option to the list.
+            return _categoryMenu;
+        }
+        else
+        {
+            return _categoryMenu;
+        }
+    }
+
+    public static async Task<List<string>> LoadDrinks(string category)
+    {
+        var _drinksMenu = new List<string>();
+        _drinksMenu.AddRange(await ApiHelper.GetDrinksList(category));
+        _drinksMenu.Insert(0,"Back");
+        return _drinksMenu;
+    }
+
+    
+    #endregion
+
+
 
 }

@@ -1,6 +1,8 @@
 ﻿using DrinksAPI.Models;
+using DrinksAPI.Services;
 using DrinksApp.Models;
 using Newtonsoft.Json;
+using System.Runtime.CompilerServices;
 
 namespace DrinksApp.Services;
 
@@ -60,6 +62,8 @@ public static class ApiHelper
             throw new Exception(response.ReasonPhrase);
         }
     }
+
+    public static async Task<int> GetRecipeID()
     public static async Task GetRecipe(int recipeId)
     {
         using HttpResponseMessage response = await ApiClient!.GetAsync($"lookup.php?i={recipeId}");
@@ -67,6 +71,11 @@ public static class ApiHelper
         if (response.IsSuccessStatusCode)
         {
             string jsonResponse = await response.Content.ReadAsStringAsync();
+
+            RecipeDTO? recipeDTO = JsonConvert.DeserializeObject<RecipeDTO>(jsonResponse);
+            RecipeResponse recipeResponse = DrinkReciperMapper.ReturnRecipeData(recipeDTO!);
+            Console.ReadKey();
+            
         //    DrinkResponse dr = JsonConvert.DeserializeObject<DrinkResponse>(jsonResponse)!;
 
         //    List<string> Items = new();

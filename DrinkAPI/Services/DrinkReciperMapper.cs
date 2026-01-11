@@ -4,14 +4,21 @@ namespace DrinksAPI.Services;
 
 public class DrinkReciperMapper
 {
-    public static List<Ingredient>? ConvertIngredientData(RecipeDTO dto)
+    public static RecipeResponse ReturnRecipeData(RecipeDTO dto)
     {
         if (dto == null)
         {
-            return null;
+            throw new ArgumentNullException(nameof(dto));
         }
         else
         {
+            RecipeResponse response = new RecipeResponse();
+            response.Id = dto.Id;
+            response.DrinkName = dto.DrinkName;
+            response.Category = dto.Category;
+            response.Glass = dto.Glass;
+            response.InstructionsText = dto.InstructionsText;
+
             List<Ingredient> returnList = new();
 
             returnList.Add(new Ingredient() { Name = dto.Ingredient1, Measurement = dto.Measure1 });
@@ -32,12 +39,12 @@ public class DrinkReciperMapper
 
             foreach (var item in returnList)
             {
-                if (item.Name == "null" && item.Measurement == "null")
+                if (item.Name != "null" && item.Measurement != "null")
                 {
-                    returnList.Remove(item);
+                    response.IngredientList.Add(item);
                 }
             }
-            return returnList;
+            return response;
         }
     }
 }
