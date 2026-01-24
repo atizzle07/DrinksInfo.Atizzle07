@@ -88,14 +88,14 @@ public static class ApiHelper
             RecipeResponse recipeResponse = DrinkReciperMapper.ReturnRecipeData(recipeDTO!);
             Console.ReadKey();
 
-            //    DrinkResponse dr = JsonConvert.DeserializeObject<DrinkResponse>(jsonResponse)!;
+            //DrinkResponse dr = JsonConvert.DeserializeObject<DrinkResponse>(jsonResponse)!;
 
-            //    List<string> Items = new();
-            //    foreach (DrinkItem item in dr.Drinks)
-            //    {
-            //        Items.Add(item.Name);
-            //    }
-            //    return Items;
+            //List<string> Items = new();
+            //foreach (DrinkItem item in dr.Drinks)
+            //{
+            //    Items.Add(item.Name);
+            //}
+            //return Items;
         }
         else
         {
