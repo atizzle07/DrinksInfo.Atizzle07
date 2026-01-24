@@ -1,5 +1,6 @@
 ﻿using DrinksApp.Services;
 using Spectre.Console;
+using System;
 
 public class UI
 {
@@ -36,7 +37,12 @@ public class UI
 
     public static async Task<string> GetDrinkChoice(string category)
     {
-        List<string> drinksMenu = await LoadDrinks(category);
+        List<KeyValuePair<int, string>> drinksMenuWithId = await LoadDrinks(category);
+        List<string> drinksMenu = new List<string>();
+        foreach (var item in drinksMenuWithId)
+        {
+            drinksMenu.Add(item.Value);
+        }
 
         Console.Clear();
         AnsiConsole.MarkupLine($"Category Selected: [bold italic orange3]{category.ToUpper()}[/]");
@@ -47,11 +53,16 @@ public class UI
             .EnableSearch()
             .SearchPlaceholderText("Type to search...")
             .PageSize(15));
+
+        // Select and return Menu Item ID based on the user's input
+        userInput = drinksMenuWithId.FirstOrDefault(kvp => kvp.Key == Convert.ToInt32(userInput)).Value;
+
         return userInput;
     }
 
     internal static async Task<string> GetRecipeChoice(string drinkChoice)
     {
+        //drinkChoice = id
         throw new NotImplementedException();
     }
 
@@ -74,11 +85,11 @@ public class UI
         }
     }
 
-    public static async Task<List<string>> LoadDrinks(string category)
+    public static async Task<List<KeyValuePair<int, string>>> LoadDrinks(string category)
     {
-        var _drinksMenu = new List<string>();
+        var _drinksMenu = new List<KeyValuePair<int, string>>();
         _drinksMenu.AddRange(await ApiHelper.GetDrinksList(category));
-        _drinksMenu.Insert(0,"Back");
+        _drinksMenu.Insert(0, new KeyValuePair<int, string>(_drinksMenu.Count, "Back"));
         return _drinksMenu;
     }
 

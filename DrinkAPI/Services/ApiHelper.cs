@@ -40,7 +40,7 @@ public static class ApiHelper
         }
     }
 
-    public static async Task<List<string>> GetDrinksList(string category)
+    public static async Task<List<KeyValuePair<int,string>>> GetDrinksList(string category)
     {
         using HttpResponseMessage response = await ApiClient!.GetAsync($"filter.php?c={category}");
 
@@ -50,10 +50,10 @@ public static class ApiHelper
             Console.ReadKey();
             DrinkResponse dr = JsonConvert.DeserializeObject<DrinkResponse>(jsonResponse)!;
 
-            List<string> Items = new();
+            List<KeyValuePair<int, string>> Items = new();
             foreach (DrinkItem item in dr.Drinks)
             {
-                Items.Add(item.Name);
+                Items.Add(new KeyValuePair<int, string>(item.Id, item.Name));
             }
             return Items;
         }
@@ -63,7 +63,19 @@ public static class ApiHelper
         }
     }
 
-    public static async Task<int> GetRecipeID()
+    public static async Task<int> GetRecipeID(string drinkChoice)
+    {
+        using HttpResponseMessage response = await ApiClient!.GetAsync($"search.php?s={drinkChoice}");
+
+        if (response.IsSuccessStatusCode)
+        {
+            return 1;
+
+        } else
+        {
+            throw new Exception(response.ReasonPhrase);
+        }
+    }
     public static async Task GetRecipe(int recipeId)
     {
         using HttpResponseMessage response = await ApiClient!.GetAsync($"lookup.php?i={recipeId}");
@@ -75,15 +87,15 @@ public static class ApiHelper
             RecipeDTO? recipeDTO = JsonConvert.DeserializeObject<RecipeDTO>(jsonResponse);
             RecipeResponse recipeResponse = DrinkReciperMapper.ReturnRecipeData(recipeDTO!);
             Console.ReadKey();
-            
-        //    DrinkResponse dr = JsonConvert.DeserializeObject<DrinkResponse>(jsonResponse)!;
 
-        //    List<string> Items = new();
-        //    foreach (DrinkItem item in dr.Drinks)
-        //    {
-        //        Items.Add(item.Name);
-        //    }
-        //    return Items;
+            //    DrinkResponse dr = JsonConvert.DeserializeObject<DrinkResponse>(jsonResponse)!;
+
+            //    List<string> Items = new();
+            //    foreach (DrinkItem item in dr.Drinks)
+            //    {
+            //        Items.Add(item.Name);
+            //    }
+            //    return Items;
         }
         else
         {
