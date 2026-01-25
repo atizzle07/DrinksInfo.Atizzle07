@@ -1,8 +1,9 @@
 ﻿using DrinksAPI.Models;
 using DrinksApp.Services;
 using Spectre.Console;
-using System;
-using System.Runtime.CompilerServices;
+using System.Collections.ObjectModel;
+using System.Reflection;
+using System.Reflection.Emit;
 
 public class UI
 {
@@ -62,13 +63,27 @@ public class UI
         return userInput;
     }
 
-    internal static async Task<string> DisplayRecipe(string drinkChoice)
+    public static async Task<string> DisplayRecipe(string drinkChoice)
     {
-        //drinkChoice = id
-        // call API to get recipe from ID
-        // load recipe object into a displayable object
+        Console.Clear();
+        //drinkChoice = id number
+        int colCount=0;
+
+        // call API to get recipe from ID and load into object
+        RecipeResponse recipe = await ApiHelper.GetRecipe(drinkChoice);
+
         // display object in table format
-        throw new NotImplementedException();
+        var table = new Table();
+
+        table.AddColumn("Info Type", col => col.RightAligned());
+        table.AddColumn("Value", col => col.Centered());
+
+        foreach (var property in recipe.GetType().GetProperties())
+        {
+            table.AddRow(property.Name.ToString(), property.GetValue(recipe).ToString() ?? "");
+        }
+
+        AnsiConsole.Write(table);
     }
 
 
@@ -98,11 +113,8 @@ public class UI
         return _drinksMenu;
     }
 
-    public static async Task<RecipeResponse> LoadRecipe(string recipeID)
-    {
-        throw new NotImplementedException();
-    }
     
+
     #endregion
 
 }

@@ -63,20 +63,7 @@ public static class ApiHelper
         }
     }
 
-    public static async Task<int> GetRecipeID(string drinkChoice)
-    {
-        using HttpResponseMessage response = await ApiClient!.GetAsync($"search.php?s={drinkChoice}");
-
-        if (response.IsSuccessStatusCode)
-        {
-            return 1;
-
-        } else
-        {
-            throw new Exception(response.ReasonPhrase);
-        }
-    }
-    public static async Task GetRecipe(int recipeId)
+    public static async Task<RecipeResponse> GetRecipe(string recipeId)
     {
         using HttpResponseMessage response = await ApiClient!.GetAsync($"lookup.php?i={recipeId}");
 
@@ -84,12 +71,15 @@ public static class ApiHelper
         {
             string jsonResponse = await response.Content.ReadAsStringAsync();
 
-            RecipeDTO? recipeDTO = JsonConvert.DeserializeObject<RecipeDTO>(jsonResponse);
-            RecipeResponse recipeResponse = DrinkReciperMapper.ReturnRecipeData(recipeDTO!);
-            Console.ReadKey();
+            RecipeDTO? recipeDTO = JsonConvert.DeserializeObject<RecipeDTO>(jsonResponse); // convert json response to a recipeDTO object
+            RecipeResponse recipeResponse = DrinkReciperMapper.ReturnRecipeData(recipeDTO!); // map recipeDTO to recipe object
+            Console.ReadKey(); // Debugging only, remove when not needed
+
+            return recipeResponse;
 
             //DrinkResponse dr = JsonConvert.DeserializeObject<DrinkResponse>(jsonResponse)!;
 
+            re
             //List<string> Items = new();
             //foreach (DrinkItem item in dr.Drinks)
             //{
