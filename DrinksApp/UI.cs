@@ -63,7 +63,7 @@ public class UI
         return userInput;
     }
 
-    public static async Task<string> DisplayRecipe(string drinkChoice)
+    public static async void DisplayRecipe(string drinkChoice)
     {
         Console.Clear();
         //drinkChoice = id number
