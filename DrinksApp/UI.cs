@@ -74,14 +74,14 @@ public class UI
 
     }
 
-    public static async void DisplayRecipe(string drinkChoice)
+    public static async void DisplayRecipe(string drinkChoiceId)
     {
         Console.Clear();
         //drinkChoice = id number
         int colCount = 0;
 
         // call API to get recipe from ID and load into object
-        RecipeResponse recipe = await ApiHelper.GetRecipe(drinkChoice);
+        RecipeResponse recipe = await ApiHelper.GetRecipe(drinkChoiceId);
 
         // display object in table format
         var table = new Table();

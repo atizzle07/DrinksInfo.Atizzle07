@@ -1,7 +1,7 @@
 ﻿using DrinksApp.Services;
 
 string categoryChoice;
-string drinkChoice;
+string drinkChoiceId;
 string recipeChoice;
 ApiHelper.InitializeClient();
 UI.WelcomeMessage();
@@ -16,13 +16,13 @@ while (true)
     while (true)
     {
         // step 2 - select and display available drinks and return id of selected drink
-        drinkChoice = await UI.GetDrinkChoice(categoryChoice);
-        if (drinkChoice == "Back")
+        drinkChoiceId = await UI.GetDrinkChoice(categoryChoice);
+        if (drinkChoiceId == "Back")
             break;
         while (true)
         {
             // step 3 - select and display the selected recipe
-            UI.DisplayRecipe(drinkChoice);
+            UI.DisplayRecipe(drinkChoiceId);
         }
     }
 }
