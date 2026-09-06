@@ -96,7 +96,7 @@ public class UI
         }
         Console.ReadKey();
     }
-    public static async Task DisplayRecipeTable(string drinkChoiceId)
+    public static async Task<string> DisplayRecipeTable(string drinkChoiceId)
     {
         Console.Clear();
 
@@ -130,10 +130,11 @@ public class UI
 
         foreach (var item in recipe.IngredientList)
         {
-            if(string.IsNullOrEmpty(item.Ingredient))
+            if (string.IsNullOrEmpty(item.Ingredient))
             {
                 continue;
-            } else
+            }
+            else
             {
                 ingredientsTable.AddRow(
                 item.Ingredient ?? "",
@@ -144,12 +145,20 @@ public class UI
         AnsiConsole.Write(table);
         AddSpace(2);
         AnsiConsole.Write(ingredientsTable);
-        AddSpace(3);
+        AddSpace(2);
         AnsiConsole.WriteLine(recipe.InstructionsText);
-        string userChoice;
+        AddSpace(3);
 
+        string userChoice = AnsiConsole.Prompt(
+            new SelectionPrompt<string>()
+                .Title("Where would you like to go?")
+                .AddChoices(
+                    "Drinks",
+                    "Categories",
+                    "Exit"
+                ));
 
-
+        return userChoice;
 
     }
     #endregion
