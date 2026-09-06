@@ -21,8 +21,8 @@ while (true)
         while (true)
         {
             // step 3 - select and display the selected recipe
-            // await UI.DisplayRecipeBasic(drinkChoiceId);
             await UI.DisplayRecipeTable(drinkChoiceId);
+            // TODO - add nav functions after recipe is displayed
             Console.ReadKey();
         }
     }

@@ -23,6 +23,17 @@ public class UI
         AnsiConsole.MarkupLine("[bold orange3]Press Enter to Continue...[/]");
         Console.ReadKey();
     }
+    public static void AddSpace(int lines)
+    {
+        for (int i = 0; i < lines; i++)
+        {
+            Console.WriteLine();
+        }
+    }
+    public static void GoBack() //TODO - need to implmeent for en of main loop to select which part you want to go back to
+    {
+
+    }
 
     public static async Task<string> GetCategoryChoice()
     {
@@ -35,7 +46,6 @@ public class UI
             .AddChoices(categoryMenu));
         return userInput;
     }
-
     public static async Task<string> GetDrinkChoice(string category)
     {
         List<KeyValuePair<int, string>> drinksMenuWithId = await LoadDrinks(category);
@@ -64,7 +74,6 @@ public class UI
         else return "Back";
 
     }
-
     public static async Task DisplayRecipeBasic(string drinkChoiceId)
     {
         Console.Clear();
@@ -87,7 +96,6 @@ public class UI
         }
         Console.ReadKey();
     }
-
     public static async Task DisplayRecipeTable(string drinkChoiceId)
     {
         Console.Clear();
@@ -95,15 +103,16 @@ public class UI
         // call API to get recipe from ID and load into object
         RecipeResponse recipe = await ApiHelper.GetRecipe(drinkChoiceId);
 
-        var table = new Table();
+        var table = new Table().HideHeaders();
         var ingredientsTable = new Table();
 
+        table.Title("[bold orange3]Drink Information[/]");
         table.AddColumn("Type", col => col.RightAligned());
-        table.AddColumn("Value", col => col.Centered());
+        table.AddColumn("Value", col => col.LeftAligned());
 
         foreach (PropertyInfo property in recipe.GetType().GetProperties())
         {
-            if (property.Name == "IngredientList")
+            if (property.Name == "IngredientList" || property.Name == "Id" || property.Name == "InstructionsText")
             {
                 continue;
             }
@@ -115,25 +124,30 @@ public class UI
             }
         }
 
-        ingredientsTable.AddColumn("Ingredient");
-        ingredientsTable.AddColumn("Amount");
+        ingredientsTable.Title("[bold orange3]Ingredient List[/]");
+        ingredientsTable.AddColumn("Ingredient", col => col.LeftAligned());
+        ingredientsTable.AddColumn("Amount", col => col.LeftAligned());
 
         foreach (var item in recipe.IngredientList)
         {
-            ingredientsTable.AddRow(
+            if(string.IsNullOrEmpty(item.Ingredient))
+            {
+                continue;
+            } else
+            {
+                ingredientsTable.AddRow(
                 item.Ingredient ?? "",
                 item.Measurement ?? "");
+            }
         }
 
         AnsiConsole.Write(table);
-        AnsiConsole.WriteLine(recipe.InstructionsText);
+        AddSpace(2);
         AnsiConsole.Write(ingredientsTable);
-        Console.WriteLine();
-        Console.ReadKey();
+        AddSpace(3);
+        AnsiConsole.WriteLine(recipe.InstructionsText);
     }
-
     #endregion
-
     #region LoadData
     public static async Task<List<string>> LoadCategories()
     {
@@ -161,5 +175,4 @@ public class UI
 
 
     #endregion
-
 }
