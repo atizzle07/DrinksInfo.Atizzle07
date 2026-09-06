@@ -74,7 +74,7 @@ public class UI
 
     }
 
-    public static async void DisplayRecipe(string drinkChoiceId)
+    public static async Task DisplayRecipe(string drinkChoiceId)
     {
         Console.Clear();
         //drinkChoice = id number
@@ -95,6 +95,7 @@ public class UI
         }
 
         AnsiConsole.Write(table);
+        Console.ReadKey();
     }
 
 
