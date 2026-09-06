@@ -47,7 +47,6 @@ public static class ApiHelper
         if (response.IsSuccessStatusCode)
         {
             string jsonResponse = await response.Content.ReadAsStringAsync();
-            Console.ReadKey();
             DrinkResponse dr = JsonConvert.DeserializeObject<DrinkResponse>(jsonResponse)!;
 
             List<KeyValuePair<int, string>> Items = new();
@@ -72,14 +71,13 @@ public static class ApiHelper
             string jsonResponse = await response.Content.ReadAsStringAsync();
 
             RecipeDTO? recipeDTO = JsonConvert.DeserializeObject<RecipeDTO>(jsonResponse); // convert json response to a recipeDTO object
-            RecipeResponse recipeResponse = DrinkReciperMapper.ReturnRecipeData(recipeDTO!); // map recipeDTO to recipe object
+            RecipeResponse recipeResponse = DrinkRecipeMapper.ReturnRecipeData(recipeDTO!); // map recipeDTO to recipe object
             Console.ReadKey(); // Debugging only, remove when not needed
 
             return recipeResponse;
 
             //DrinkResponse dr = JsonConvert.DeserializeObject<DrinkResponse>(jsonResponse)!;
 
-            re
             //List<string> Items = new();
             //foreach (DrinkItem item in dr.Drinks)
             //{

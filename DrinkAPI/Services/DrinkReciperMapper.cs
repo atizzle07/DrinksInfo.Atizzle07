@@ -2,7 +2,7 @@
 
 namespace DrinksAPI.Services;
 
-public class DrinkReciperMapper
+public class DrinkRecipeMapper
 {
     public static RecipeResponse ReturnRecipeData(RecipeDTO dto)
     {

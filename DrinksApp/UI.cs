@@ -58,16 +58,24 @@ public class UI
             .PageSize(15));
 
         // Select and return Menu Item ID based on the user's input
-        userInput = drinksMenuWithId.FirstOrDefault(kvp => kvp.Key == Convert.ToInt32(userInput)).Value;
+        if (userInput.ToLower() != "back")
+        {
+            userInput = drinksMenuWithId.FirstOrDefault(kvp => kvp.Key == Convert.ToInt32(userInput)).Value;
 
-        return userInput;
+            return userInput;
+        }
+        else
+        {
+            return "Back";
+        }
+
     }
 
     public static async void DisplayRecipe(string drinkChoice)
     {
         Console.Clear();
         //drinkChoice = id number
-        int colCount=0;
+        int colCount = 0;
 
         // call API to get recipe from ID and load into object
         RecipeResponse recipe = await ApiHelper.GetRecipe(drinkChoice);
@@ -113,7 +121,7 @@ public class UI
         return _drinksMenu;
     }
 
-    
+
 
     #endregion
 
