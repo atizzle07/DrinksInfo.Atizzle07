@@ -2,7 +2,7 @@
 
 namespace DrinksAPI.Services;
 
-public class DrinkRecipeMapper
+public class ResponseMapper
 {
     public static RecipeResponse ReturnRecipeData(RecipeDTO dto)
     {
@@ -12,7 +12,6 @@ public class DrinkRecipeMapper
         }
         else
         {
-            // map RecipeDTO to RecipeResponse object
             RecipeResponse response = new RecipeResponse();
             response.Id = dto.Id;
             response.DrinkName = dto.DrinkName;
@@ -62,7 +61,7 @@ public class DrinkRecipeMapper
 
             for (int i = 0; i < ingredients.Length; i++)
             {
-                response.IngredientList.Add(
+                returnList.Add(
                     new IngredientMeasurement
                     {
                         Ingredient = ingredients[i],

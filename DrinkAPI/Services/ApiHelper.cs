@@ -70,20 +70,11 @@ public static class ApiHelper
         {
             string jsonResponse = await response.Content.ReadAsStringAsync();
 
-            RecipeDTO? recipeDTO = JsonConvert.DeserializeObject<RecipeDTO>(jsonResponse); // TODO - This is not creating a filled recipeDTO object. Try using this: https://www.newtonsoft.com/json/help/html/SerializingJSONFragments.htm
-            RecipeResponse recipeResponse = DrinkRecipeMapper.ReturnRecipeData(recipeDTO!); // map recipeDTO to recipe object
-            Console.ReadKey(); // Debugging only, remove when not needed
+            ApiResponse? apiResponse = JsonConvert.DeserializeObject<ApiResponse>(jsonResponse)!; //Takes the raw api response and maps it to the apiresponse class
+            RecipeDTO? recipeDTO = apiResponse?.Drinks?.FirstOrDefault(); //Takes the api response and pulls the list into a DTO object
 
+            RecipeResponse recipeResponse = ResponseMapper.ReturnRecipeData(recipeDTO!); // map recipeDTO to recipe object
             return recipeResponse;
-
-            //DrinkResponse dr = JsonConvert.DeserializeObject<DrinkResponse>(jsonResponse)!;
-
-            //List<string> Items = new();
-            //foreach (DrinkItem item in dr.Drinks)
-            //{
-            //    Items.Add(item.Name);
-            //}
-            //return Items;
         }
         else
         {

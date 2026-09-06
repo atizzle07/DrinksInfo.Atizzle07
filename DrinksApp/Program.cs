@@ -22,7 +22,7 @@ while (true)
         while (true)
         {
             // step 3 - select and display the selected recipe
-            await UI.DisplayRecipe(drinkChoiceId);
+            await UI.DisplayRecipeBasic(drinkChoiceId);
         }
     }
 }

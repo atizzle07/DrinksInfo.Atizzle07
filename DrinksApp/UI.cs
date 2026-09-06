@@ -74,7 +74,7 @@ public class UI
 
     }
 
-    public static async Task DisplayRecipe(string drinkChoiceId)
+    public static async Task DisplayRecipeBasic(string drinkChoiceId)
     {
         Console.Clear();
         //drinkChoice = id number
@@ -83,21 +83,47 @@ public class UI
         // call API to get recipe from ID and load into object
         RecipeResponse recipe = await ApiHelper.GetRecipe(drinkChoiceId);
 
-        // display object in table format
+        // Print Table headers
+        Console.WriteLine("Type\t\tValue");
+        for (int i = 0; i < 20; i++)
+        {
+            Console.Write('=');
+        }
+
+        foreach (var property in recipe.GetType().GetProperties())
+        {
+            Console.WriteLine($"{property.Name}\t\t{property.GetValue(recipe)}");
+        }
+        Console.ReadKey();
+    }
+
+    public static async Task DisplayRecipeTable(string drinkChoiceId)
+    {
+        Console.Clear();
+        //drinkChoice = id number
+        int colCount = 0;
+
+        // call API to get recipe from ID and load into object
+        RecipeResponse recipe = await ApiHelper.GetRecipe(drinkChoiceId);
+
+
         var table = new Table();
 
         table.AddColumn("Info Type", col => col.RightAligned());
         table.AddColumn("Value", col => col.Centered());
 
+
+
         foreach (var property in recipe.GetType().GetProperties())
         {
-            table.AddRow(property.Name.ToString(), property.GetValue(recipe).ToString() ?? "");
+            table.AddRow(
+                property.Name.ToString(), 
+                property.GetValue(recipe).ToString() ?? "");
         }
 
         AnsiConsole.Write(table);
         Console.ReadKey();
     }
-
 
     #endregion
 
