@@ -6,18 +6,23 @@ string recipeChoice;
 ApiHelper.InitializeClient();
 UI.WelcomeMessage();
 
-do
+while (true)
 {
-    categoryChoice = await UI.GetCategoryChoice(); // step 1 - select and display drink category
-    do
-	{
-		drinkChoice = await UI.GetDrinkChoice(categoryChoice); // step 2 - select and display available drinks and return id of selected drink
-        do
+    // step 1 - select and display drink category
+    categoryChoice = await UI.GetCategoryChoice();
+    if (categoryChoice == "Exit")
+        break;
+
+    while (true)
+    {
+        // step 2 - select and display available drinks and return id of selected drink
+        drinkChoice = await UI.GetDrinkChoice(categoryChoice);
+        if (drinkChoice == "Back")
+            break;
+        while (true)
         {
-            UI.DisplayRecipe(drinkChoice); // step 3 - select and display and select recipe
-        } while (drinkChoice != "Back");
-    } while (drinkChoice != "Back");
-
-} while (categoryChoice != "Exit");
-
-
+            // step 3 - select and display the selected recipe
+            UI.DisplayRecipe(drinkChoice);
+        }
+    }
+}

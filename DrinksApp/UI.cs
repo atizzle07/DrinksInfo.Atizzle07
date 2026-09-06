@@ -60,7 +60,10 @@ public class UI
         // Select and return Menu Item ID based on the user's input
         if (userInput.ToLower() != "back")
         {
-            userInput = drinksMenuWithId.FirstOrDefault(kvp => kvp.Key == Convert.ToInt32(userInput)).Value;
+            //TODO - This line currently returns the recipe name, not the ID
+
+            userInput = drinksMenuWithId.FirstOrDefault(kvp => kvp.Value == userInput).Key.ToString();
+            //userInput = drinksMenuWithId.FirstOrDefault(kvp => kvp.Value == userInput).Value;
 
             return userInput;
         }
