@@ -18,6 +18,7 @@ public class ResponseMapper
             response.Category = dto.Category;
             response.Glass = dto.Glass;
             response.InstructionsText = dto.InstructionsText;
+            
 
             var ingredients = new[]
             {
@@ -57,11 +58,12 @@ public class ResponseMapper
                 dto.Measure15,
             };
 
-            List<IngredientMeasurement> returnList = new();
+            List<IngredientMeasurement> ingredientMeasurements = new();
 
+            // Add ingredients / measurements to the IMs list
             for (int i = 0; i < ingredients.Length; i++)
             {
-                returnList.Add(
+                ingredientMeasurements.Add(
                     new IngredientMeasurement
                     {
                         Ingredient = ingredients[i],
@@ -69,13 +71,15 @@ public class ResponseMapper
                     }); 
             }
 
-            foreach (var item in returnList)
-            {
-                if (item.Ingredient != "null") // Don't need to check for nulls in measurements. A measurement without an ingredient is useless info
-                {
-                    response?.IngredientList?.Add(item);
-                }
-            }
+            //foreach (var item in ingredientMeasurements)
+            //{
+            //    if (item.Ingredient != "null") // Don't need to check for nulls in measurements. A measurement without an ingredient is useless info
+            //    {
+            //        response?.IngredientList?.Add(item);
+            //    }
+            //}
+            response.IngredientList = ingredientMeasurements;
+
             return response;
         }
     }

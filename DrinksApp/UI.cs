@@ -1,10 +1,7 @@
 ﻿using DrinksAPI.Models;
 using DrinksApp.Services;
 using Spectre.Console;
-using System.Collections.ObjectModel;
-using System.Net.Security;
 using System.Reflection;
-using System.Reflection.Emit;
 
 public class UI
 {
@@ -61,17 +58,10 @@ public class UI
         // Select and return Menu Item ID based on the user's input
         if (userInput.ToLower() != "back")
         {
-            //TODO - This line currently returns the recipe name, not the ID
-
             userInput = drinksMenuWithId.FirstOrDefault(kvp => kvp.Value == userInput).Key.ToString();
-            //userInput = drinksMenuWithId.FirstOrDefault(kvp => kvp.Value == userInput).Value;
-
             return userInput;
         }
-        else
-        {
-            return "Back";
-        }
+        else return "Back";
 
     }
 
@@ -103,7 +93,7 @@ public class UI
         Console.Clear();
 
         // call API to get recipe from ID and load into object
-        RecipeResponse recipe = await ApiHelper.GetRecipe(drinkChoiceId); //TODO - this is producing a null ingredients list
+        RecipeResponse recipe = await ApiHelper.GetRecipe(drinkChoiceId);
 
         var table = new Table();
         var ingredientsTable = new Table();
@@ -128,15 +118,15 @@ public class UI
         ingredientsTable.AddColumn("Ingredient");
         ingredientsTable.AddColumn("Amount");
 
-        foreach (var item in recipe.IngredientList) 
+        foreach (var item in recipe.IngredientList)
         {
             ingredientsTable.AddRow(
                 item.Ingredient ?? "",
                 item.Measurement ?? "");
-        };
+        }
 
         AnsiConsole.Write(table);
-        AnsiConsole.Write(recipe.InstructionsText);
+        AnsiConsole.WriteLine(recipe.InstructionsText);
         AnsiConsole.Write(ingredientsTable);
         Console.WriteLine();
         Console.ReadKey();

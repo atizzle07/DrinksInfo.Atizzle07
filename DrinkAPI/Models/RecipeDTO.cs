@@ -3,7 +3,7 @@ using System.Diagnostics.Metrics;
 
 namespace DrinksAPI.Models;
 
-public class RecipeDTO //TODO - Need to verify this mapping matches the full JSON response
+public class RecipeDTO
 {
     #region Header
     [JsonProperty("idDrink")] public int Id { get; set; }
