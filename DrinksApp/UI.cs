@@ -146,6 +146,11 @@ public class UI
         AnsiConsole.Write(ingredientsTable);
         AddSpace(3);
         AnsiConsole.WriteLine(recipe.InstructionsText);
+        string userChoice;
+
+
+
+
     }
     #endregion
     #region LoadData
