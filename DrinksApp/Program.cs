@@ -2,7 +2,6 @@
 
 string categoryChoice;
 string drinkChoiceId;
-string recipeChoice;
 ApiHelper.InitializeClient();
 UI.WelcomeMessage();
 
@@ -22,7 +21,9 @@ while (true)
         while (true)
         {
             // step 3 - select and display the selected recipe
-            await UI.DisplayRecipeBasic(drinkChoiceId);
+            // await UI.DisplayRecipeBasic(drinkChoiceId);
+            await UI.DisplayRecipeTable(drinkChoiceId);
+            Console.ReadKey();
         }
     }
 }

@@ -77,8 +77,6 @@ public class UI
     public static async Task DisplayRecipeBasic(string drinkChoiceId)
     {
         Console.Clear();
-        //drinkChoice = id number
-        int colCount = 0;
 
         // call API to get recipe from ID and load into object
         RecipeResponse recipe = await ApiHelper.GetRecipe(drinkChoiceId);
@@ -90,6 +88,8 @@ public class UI
             Console.Write('=');
         }
 
+        Console.WriteLine();
+
         foreach (var property in recipe.GetType().GetProperties())
         {
             Console.WriteLine($"{property.Name}\t\t{property.GetValue(recipe)}");
@@ -100,21 +100,20 @@ public class UI
     public static async Task DisplayRecipeTable(string drinkChoiceId)
     {
         Console.Clear();
-        //drinkChoice = id number
-        int colCount = 0;
 
         // call API to get recipe from ID and load into object
         RecipeResponse recipe = await ApiHelper.GetRecipe(drinkChoiceId);
 
-
         var table = new Table();
+        var ingredientsTable = new Table();
 
-        table.AddColumn("Info Type", col => col.RightAligned());
+        table.AddColumn("Type", col => col.RightAligned());
         table.AddColumn("Value", col => col.Centered());
 
+        ingredientsTable.AddColumn("Ingredient");
+        ingredientsTable.AddColumn("Amount");
 
-
-        foreach (var property in recipe.GetType().GetProperties())
+        foreach (PropertyInfo property in recipe.GetType().GetProperties())
         {
             table.AddRow(
                 property.Name.ToString(), 
