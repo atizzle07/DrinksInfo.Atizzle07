@@ -8,9 +8,22 @@ public class RecipeDTO //TODO - Need to verify this mapping matches the full JSO
     #region Header
     [JsonProperty("idDrink")] public int Id { get; set; }
     [JsonProperty("strDrink")] public string? DrinkName { get; set; }
+    [JsonProperty("strDrinkAlternate")] public string? DrinkNameAlt { get; set; }
+    [JsonProperty("strTags")] public string? Tags { get; set; }
+    [JsonProperty("strVideo")] public string? Video { get; set; }
     [JsonProperty("strCategory")] public string? Category { get; set; }
+    [JsonProperty("strIBA")] public string? IBA { get; set; }
+    [JsonProperty("strAlcoholic")] public string? Alcoholic { get; set; }
     [JsonProperty("strGlass")] public string? Glass { get; set; }
     [JsonProperty("strInstructions")] public string? InstructionsText { get; set; }
+    [JsonProperty("strInstructionsES")] public string? InstructionsES { get; set; }
+    [JsonProperty("strInstructionsDE")] public string? InstructionsDE { get; set; }
+    [JsonProperty("strInstructionsFR")] public string? InstructionsFR { get; set; }
+    [JsonProperty("strInstructionsIT")] public string? InstructionsIT { get; set; }
+    [JsonProperty("strInstructionsZH-HANS")] public string? InstructionsZHHans { get; set; }
+    [JsonProperty("strInstructionsZH-HANT")] public string? InstructionsZHHant { get; set; }
+    [JsonProperty("strDrinkThumb")] public string? Thumbnail { get; set; }
+
     #endregion
     #region Ingredients
     [JsonProperty("strIngredient1")] public string? Ingredient1 { get; set; }
@@ -45,5 +58,11 @@ public class RecipeDTO //TODO - Need to verify this mapping matches the full JSO
     [JsonProperty("strMeasure13")] public string? Measure13 { get; set; }
     [JsonProperty("strMeasure14")] public string? Measure14 { get; set; }
     [JsonProperty("strMeasure15")] public string? Measure15 { get; set; }
+    #endregion
+    #region Extra Info
+    [JsonProperty("strImageSource")] public string? ImageSource { get; set; }
+    [JsonProperty("ImageAttribution")] public string? ImageAttribution { get; set; }
+    [JsonProperty("strCreativeCommonsConfirmed")] public string? CreativeCommonsConfirmed { get; set; }
+    [JsonProperty("dateModified")] public string? dateModified { get; set; }
     #endregion
 }

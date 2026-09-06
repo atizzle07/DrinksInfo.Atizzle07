@@ -12,6 +12,7 @@ public class DrinkRecipeMapper
         }
         else
         {
+            // map RecipeDTO to RecipeResponse object
             RecipeResponse response = new RecipeResponse();
             response.Id = dto.Id;
             response.DrinkName = dto.DrinkName;
@@ -36,7 +37,6 @@ public class DrinkRecipeMapper
                 dto.Ingredient13,
                 dto.Ingredient14,
                 dto.Ingredient15,
-
             };
 
             var measurements = new[]
@@ -56,7 +56,6 @@ public class DrinkRecipeMapper
                 dto.Measure13,
                 dto.Measure14,
                 dto.Measure15,
-
             };
 
             List<IngredientMeasurement> returnList = new();
