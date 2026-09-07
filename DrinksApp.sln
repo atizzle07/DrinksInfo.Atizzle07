@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrinksApp", "DrinksApp\Drin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrinksAPI", "DrinkAPI\DrinksAPI.csproj", "{BD94543A-B3A0-2E4D-C6B2-027E8C4EC9DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrinksApp.Test", "DrinksApp.Test\DrinksApp.Test.csproj", "{3897E0CF-B8C3-4F26-A63C-C0E87E99BF16}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{BD94543A-B3A0-2E4D-C6B2-027E8C4EC9DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD94543A-B3A0-2E4D-C6B2-027E8C4EC9DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD94543A-B3A0-2E4D-C6B2-027E8C4EC9DE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3897E0CF-B8C3-4F26-A63C-C0E87E99BF16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3897E0CF-B8C3-4F26-A63C-C0E87E99BF16}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3897E0CF-B8C3-4F26-A63C-C0E87E99BF16}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3897E0CF-B8C3-4F26-A63C-C0E87E99BF16}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

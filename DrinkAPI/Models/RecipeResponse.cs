@@ -5,7 +5,7 @@ namespace DrinksAPI.Models;
 
 public class RecipeResponse
 {
-    public int Id { get; set; }
+    public int Id { get; set; } = 0;
 
     public string? DrinkName { get; set; }
 
@@ -13,7 +13,7 @@ public class RecipeResponse
 
     public string? Glass { get; set; }
 
-    public string? InstructionsText { get; set; }
+    public string InstructionsText { get; set; } = "";
 
     public List<IngredientMeasurement>? IngredientList { get; set; }
 }

@@ -100,15 +100,18 @@ public class UI
         ingredientsTable.Title("[bold orange3]Ingredient List[/]")
             .AddColumn("Ingredient", col => col.LeftAligned())
             .AddColumn("Amount", col => col.LeftAligned());
-
-        foreach (var item in recipe.IngredientList)
+        if (recipe.IngredientList != null)
         {
-            if (string.IsNullOrEmpty(item.Ingredient))
-                continue;
-            else
-                ingredientsTable.AddRow(
-                    item.Ingredient ?? "",
-                    item.Measurement ?? "");
+            foreach (var item in recipe.IngredientList)
+            {
+                string _item = item.Ingredient ?? "";
+                if (_item == "")
+                    continue;
+                else
+                    ingredientsTable.AddRow(
+                        item.Ingredient ?? "",
+                        item.Measurement ?? "");
+            } 
         }
 
         AnsiConsole.Write(table);
