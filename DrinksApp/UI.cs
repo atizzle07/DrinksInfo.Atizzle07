@@ -8,6 +8,12 @@ public class UI
     #region Menu Setups
     public static void WelcomeMessage()
     {
+        DrawTitle();
+        AnsiConsole.MarkupLine("[bold orange3]Press Enter to Continue...[/]");
+        Console.ReadKey();
+    }
+    public static void DrawTitle()
+    {
         Rule rule = new();
         rule.Border = BoxBorder.Heavy;
         var figlet = new FigletText("DRINKS LOOKUP")
@@ -20,8 +26,6 @@ public class UI
         AnsiConsole.Write(figlet);
         AnsiConsole.Write(rule);
         Console.WriteLine("\n\n");
-        AnsiConsole.MarkupLine("[bold orange3]Press Enter to Continue...[/]");
-        Console.ReadKey();
     }
     public static void AddSpace(int lines)
     {
@@ -30,16 +34,12 @@ public class UI
             Console.WriteLine();
         }
     }
-    public static void GoBack() //TODO - need to implmeent for en of main loop to select which part you want to go back to
-    {
-
-    }
-
     public static async Task<string> GetCategoryChoice()
     {
         List<string> categoryMenu = await LoadCategories();
 
         Console.Clear();
+        DrawTitle();
         var userInput = AnsiConsole.Prompt(
             new SelectionPrompt<string>()
             .Title("Please select a menu Option:")
@@ -49,21 +49,20 @@ public class UI
     public static async Task<string> GetDrinkChoice(string category)
     {
         List<KeyValuePair<int, string>> drinksMenuWithId = await LoadDrinks(category);
-        List<string> drinksMenu = new List<string>();
+        List<string> drinksMenu = new();
         foreach (var item in drinksMenuWithId)
-        {
             drinksMenu.Add(item.Value);
-        }
 
         Console.Clear();
+        DrawTitle();
         AnsiConsole.MarkupLine($"Category Selected: [bold italic orange3]{category.ToUpper()}[/]");
         var userInput = AnsiConsole.Prompt(
             new SelectionPrompt<string>()
-            .Title("Please select a drink to view recipe:")
-            .AddChoices(drinksMenu)
-            .EnableSearch()
-            .SearchPlaceholderText("Type to search...")
-            .PageSize(15));
+                .Title("Please select a drink to view recipe:")
+                .AddChoices(drinksMenu)
+                .EnableSearch()
+                .SearchPlaceholderText("Type to search...")
+                .PageSize(15));
 
         // Select and return Menu Item ID based on the user's input
         if (userInput.ToLower() != "back")
@@ -72,6 +71,63 @@ public class UI
             return userInput;
         }
         else return "Back";
+
+    }
+    public static async Task<string> DisplayRecipeTable(string drinkChoiceId)
+    {
+        Console.Clear();
+        DrawTitle();
+
+        RecipeResponse recipe = await ApiHelper.GetRecipe(drinkChoiceId);
+
+        var table = new Table().HideHeaders();
+        var ingredientsTable = new Table();
+
+        table.Title("[bold orange3]Drink Information[/]")
+            .AddColumn("Type", col => col.RightAligned())
+            .AddColumn("Value", col => col.LeftAligned());
+
+        foreach (PropertyInfo property in recipe.GetType().GetProperties())
+        {
+            if (property.Name == "IngredientList" || property.Name == "Id" || property.Name == "InstructionsText")
+                continue;
+            else
+                table.AddRow(
+                    property.Name.ToString(),
+                    property.GetValue(recipe)?.ToString() ?? "");
+        }
+
+        ingredientsTable.Title("[bold orange3]Ingredient List[/]")
+            .AddColumn("Ingredient", col => col.LeftAligned())
+            .AddColumn("Amount", col => col.LeftAligned());
+
+        foreach (var item in recipe.IngredientList)
+        {
+            if (string.IsNullOrEmpty(item.Ingredient))
+                continue;
+            else
+                ingredientsTable.AddRow(
+                    item.Ingredient ?? "",
+                    item.Measurement ?? "");
+        }
+
+        AnsiConsole.Write(table);
+        AddSpace(2);
+        AnsiConsole.Write(ingredientsTable);
+        AddSpace(2);
+        AnsiConsole.WriteLine(recipe.InstructionsText);
+        AddSpace(3);
+
+        string userChoice = AnsiConsole.Prompt(
+            new SelectionPrompt<string>()
+                .Title("Where would you like to go?")
+                .AddChoices(
+                    "Drinks",
+                    "Categories",
+                    "Exit"
+                ));
+
+        return userChoice;
 
     }
     public static async Task DisplayRecipeBasic(string drinkChoiceId)
@@ -96,71 +152,7 @@ public class UI
         }
         Console.ReadKey();
     }
-    public static async Task<string> DisplayRecipeTable(string drinkChoiceId)
-    {
-        Console.Clear();
 
-        // call API to get recipe from ID and load into object
-        RecipeResponse recipe = await ApiHelper.GetRecipe(drinkChoiceId);
-
-        var table = new Table().HideHeaders();
-        var ingredientsTable = new Table();
-
-        table.Title("[bold orange3]Drink Information[/]");
-        table.AddColumn("Type", col => col.RightAligned());
-        table.AddColumn("Value", col => col.LeftAligned());
-
-        foreach (PropertyInfo property in recipe.GetType().GetProperties())
-        {
-            if (property.Name == "IngredientList" || property.Name == "Id" || property.Name == "InstructionsText")
-            {
-                continue;
-            }
-            else
-            {
-                table.AddRow(
-                    property.Name.ToString(),
-                    property.GetValue(recipe)?.ToString() ?? "");
-            }
-        }
-
-        ingredientsTable.Title("[bold orange3]Ingredient List[/]");
-        ingredientsTable.AddColumn("Ingredient", col => col.LeftAligned());
-        ingredientsTable.AddColumn("Amount", col => col.LeftAligned());
-
-        foreach (var item in recipe.IngredientList)
-        {
-            if (string.IsNullOrEmpty(item.Ingredient))
-            {
-                continue;
-            }
-            else
-            {
-                ingredientsTable.AddRow(
-                item.Ingredient ?? "",
-                item.Measurement ?? "");
-            }
-        }
-
-        AnsiConsole.Write(table);
-        AddSpace(2);
-        AnsiConsole.Write(ingredientsTable);
-        AddSpace(2);
-        AnsiConsole.WriteLine(recipe.InstructionsText);
-        AddSpace(3);
-
-        string userChoice = AnsiConsole.Prompt(
-            new SelectionPrompt<string>()
-                .Title("Where would you like to go?")
-                .AddChoices(
-                    "Drinks",
-                    "Categories",
-                    "Exit"
-                ));
-
-        return userChoice;
-
-    }
     #endregion
     #region LoadData
     public static async Task<List<string>> LoadCategories()
@@ -169,13 +161,10 @@ public class UI
         if (_categoryMenu.Count == 0)
         {
             _categoryMenu!.AddRange(await ApiHelper.GetAllCategories());
-            _categoryMenu.Add("Exit"); // Append an exit option to the list.
+            _categoryMenu.Insert(0, "Exit");
             return _categoryMenu;
         }
-        else
-        {
-            return _categoryMenu;
-        }
+        else return _categoryMenu;
     }
 
     public static async Task<List<KeyValuePair<int, string>>> LoadDrinks(string category)
